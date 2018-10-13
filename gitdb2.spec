@@ -5,17 +5,17 @@
 # Source0 file verified with key 0x665F99FA9D99966C (byronimo@gmail.com)
 #
 Name     : gitdb2
-Version  : 2.0.4
-Release  : 1
-URL      : https://files.pythonhosted.org/packages/b9/36/4bdb753087a9232899ac482ee2d5da25f50b63998d661aa4e8170acd95b5/gitdb2-2.0.4.tar.gz
-Source0  : https://files.pythonhosted.org/packages/b9/36/4bdb753087a9232899ac482ee2d5da25f50b63998d661aa4e8170acd95b5/gitdb2-2.0.4.tar.gz
-Source99 : https://files.pythonhosted.org/packages/b9/36/4bdb753087a9232899ac482ee2d5da25f50b63998d661aa4e8170acd95b5/gitdb2-2.0.4.tar.gz.asc
+Version  : 2.0.5
+Release  : 2
+URL      : https://files.pythonhosted.org/packages/c4/5c/579abccd59187eaf6b3c8a4a6ecd86fce1dfd818155bfe4c52ac28dca6b7/gitdb2-2.0.5.tar.gz
+Source0  : https://files.pythonhosted.org/packages/c4/5c/579abccd59187eaf6b3c8a4a6ecd86fce1dfd818155bfe4c52ac28dca6b7/gitdb2-2.0.5.tar.gz
+Source99 : https://files.pythonhosted.org/packages/c4/5c/579abccd59187eaf6b3c8a4a6ecd86fce1dfd818155bfe4c52ac28dca6b7/gitdb2-2.0.5.tar.gz.asc
 Summary  : Git Object Database
 Group    : Development/Tools
 License  : BSD-3-Clause
-Requires: gitdb2-python3
-Requires: gitdb2-license
-Requires: gitdb2-python
+Requires: gitdb2-license = %{version}-%{release}
+Requires: gitdb2-python = %{version}-%{release}
+Requires: gitdb2-python3 = %{version}-%{release}
 Requires: smmap2
 BuildRequires : buildreq-distutils3
 BuildRequires : smmap2
@@ -36,7 +36,7 @@ license components for the gitdb2 package.
 %package python
 Summary: python components for the gitdb2 package.
 Group: Default
-Requires: gitdb2-python3
+Requires: gitdb2-python3 = %{version}-%{release}
 
 %description python
 python components for the gitdb2 package.
@@ -52,21 +52,21 @@ python3 components for the gitdb2 package.
 
 
 %prep
-%setup -q -n gitdb2-2.0.4
+%setup -q -n gitdb2-2.0.5
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533787937
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1539440293
+python3 setup.py build
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/gitdb2
-cp LICENSE %{buildroot}/usr/share/doc/gitdb2/LICENSE
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/gitdb2
+cp LICENSE %{buildroot}/usr/share/package-licenses/gitdb2/LICENSE
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -75,8 +75,8 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/gitdb2/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gitdb2/LICENSE
 
 %files python
 %defattr(-,root,root,-)
